@@ -1,309 +1,125 @@
-import React, { useState } from "react";
-import {
-  Text,
-  StyleSheet,
-  View,
-  TextInput,
-  Image,
-  Pressable,
-  ScrollView
-} from "react-native";
+import React from "react";
+import { Text, View, StyleSheet, TouchableHighlight, TextInput } from "react-native";
 
-const PaymentSubscriptionScreen = (params) => {
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardExpiry, setCardExpiry] = useState("");
-  const [cvv, setCvv] = useState("");
-  const [name, setName] = useState("");
+const SupportSendFeedbackScreen = () => {
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <TabView tabTitles={["Beginer", "Intermediate", "VIP"]} selected={0} />
-        <View style={styles.subPallete}>
-          <View style={styles.planDes}>
-            <Text style={[styles.fnt25, styles.boldText]}>Beginner</Text>
-            <Text style={styles.fnt16}>Description</Text>
-          </View>
-          <View style={styles.subPricing}>
-            <Text style={[styles.fnt25, styles.boldText]}>$14.99 </Text>
-            <Text style={styles.fnt16}>per month</Text>
-          </View>
-        </View>
-        <View style={styles.cardContainer}>
-          <View style={styles.tile}>
-            <Text style={styles.tileText}>Pay Subscription</Text>
-            <Image source={require("./assets/walletIcon.png")} />
-          </View>
-          <View style={styles.separator}></View>
-          <View style={styles.tile}>
-            <Text style={styles.tileText}>Add card</Text>
-            <Image source={require("./assets/addCardIcon.png")} />
-          </View>
-        </View>
-        <View style={styles.inputs}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputText}>Card Number</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={(text) => setCardNumber(text)}
-              value={cardNumber}
-              placeholder="Enter your Card Number"
-              placeholderTextColor="#9B9B9B"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          </View>
-          <View style={styles.halfInputs}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputText}>Expiration Date</Text>
-              <TextInput
-                style={[styles.input, styles.input1]}
-                onChangeText={(text) => setCardExpiry(text)}
-                value={cardExpiry}
-                placeholder="Enter your last name"
-                placeholderTextColor="#9B9B9B"
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputText}>CVV</Text>
-              <TextInput
-                style={[styles.input, styles.input2]}
-                onChangeText={(text) => setCvv(text)}
-                value={cvv}
-                placeholder="CVV"
-                placeholderTextColor="#9B9B9B"
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-            </View>
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputText}>Card Holder Name</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={(text) => setName(text)}
-              value={name}
-              placeholder="Username"
-              placeholderTextColor="#9B9B9B"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          </View>
-        </View>
-        <View style={styles.buttonsContainer}>
-          <Button buttonText={"Confirm"} />
-          <Button buttonText={"Cancel"} outline={true} />
-        </View>
-      </ScrollView>
+      <View>
+        <Text style={styles.labelText}>
+          Email address
+        </Text>
+        <Input
+          placeholder='Enter'
+        />
+      </View>
+      <View style={styles.Textarea}>
+        <Text style={styles.labelText}>
+          Message
+        </Text>
+        <TextInput style={styles.TextAreaInput}
+          numberOfLines={5}
+          multiline={true}
+          placeholder='Enter'
+          placeholderTextColor='#ddd'
+        />
+      </View>
+
+      <View style={styles.SubmitBtn}>
+        <Button>Submit</Button>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    padding: 20,
     flex: 1,
-    backgroundColor: "#fff"
+    height: "100%",
+    backgroundColor: "white"
   },
-  subPallete: {
-    marginHorizontal: 20,
-    backgroundColor: "#fff",
+  labelText: {
+    fontSize: 14,
+    fontWeight: "400",
+    marginBottom: 10,
+    marginLeft: 15
+  },
+  Textarea: {
+    marginTop: 30
+  },
+  TextAreaInput: {
+    height: 160,
+    borderWidth: 1,
+    borderColor: "#C4C4C4",
     borderRadius: 10,
-    padding: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    shadowColor: "rgba(0,0,0,0.5)",
-    elevation: 10
-  },
-  planDes: {
-    flex: 0.4,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "flex-start"
-  },
-  subPricing: {
-    flex: 0.6,
-    padding: 10,
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "center"
-  },
-  boldText: {
-    fontWeight: "bold"
-  },
-  fnt25: {
-    fontSize: 25
-  },
-  fnt16: {
-    fontSize: 16
-  },
-  cardContainer: {
-    marginHorizontal: 20,
-    marginVertical: 20,
-    padding: 10,
-    elevation: 10,
-    backgroundColor: "#fff",
-    shadowColor: "rgba(0,0,0,0.5)",
-    borderRadius: 10
-  },
-  tile: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    textAlignVertical: "top",
     padding: 10
   },
-  separator: {
-    borderBottomColor: "#F0F2F7",
-    borderBottomWidth: 1
-  },
-  inputs: {
-    paddingHorizontal: 20,
-    justifyContent: "center",
-    height: 300
-  },
-  inputContainer: {
-    flexDirection: "column",
-    flex: 1,
-    justifyContent: "center"
-  },
-  inputText: {
-    fontSize: 14,
-    marginLeft: 20
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#e6e6e6",
-    borderRadius: 10,
-    padding: 10,
-    paddingLeft: 20,
-    marginVertical: 10,
-    width: "100%",
-    height: 50
-  },
-  halfInputs: {
-    justifyContent: "space-between",
-    flexDirection: "row"
-  },
-  input1: {
-    height: 50,
-    borderRightWidth: 0,
-    borderRightColor: "#fff",
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0
-  },
-  input2: {
-    height: 50,
-    borderLeftWidth: 0,
-    borderLeftColor: "#fff",
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingHorizontal: 20
+  SubmitBtn: {
+    marginTop: 100
   }
 });
-export default PaymentSubscriptionScreen;
 
-const TabView = ({ tabTitles, selected }) => {
+export default SupportSendFeedbackScreen;
+
+const Button = (props) => {
   return (
-    <View style={tabViewStyles.paletteContainer}>
-      {tabTitles.map((title, index) => (
-        <View
-          style={
-            index === selected
-              ? tabViewStyles.selected
-              : tabViewStyles.unSelected
-          }
-          key={index}
-        >
-          <Text>{title}</Text>
-        </View>
-      ))}
-    </View>
+    <TouchableHighlight onPress={props.onPress} underlayColor='#DDDDDD'>
+      <View style={[btnStyles.button, {
+        backgroundColor: props.backgroundColor ? props.backgroundColor : "#000000",
+        height: props.height ? props.height : 49,
+        borderWidth: props.borderWidth ? props.borderWidth : 0,
+        borderColor: props.borderColor ? props.borderColor : "#000000"
+      }]}>
+        <Text style={[btnStyles.text, { color: props.color ? props.color : "#ffffff" }]}>{props.children}</Text>
+      </View>
+    </TouchableHighlight>
   );
 };
 
-const tabViewStyles = StyleSheet.create({
-  paletteContainer: {
-    marginHorizontal: 20,
-    width: "80%",
-    height: 48,
-    backgroundColor: "#F1F1F1",
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 10,
-    padding: 6,
-    marginVertical: 20
-  },
-  selected: {
-    borderRadius: 10,
-    flex: 1,
-    backgroundColor: "#fff",
-    height: "100%",
+const btnStyles = StyleSheet.create({
+  button: {
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "gray",
-    elevation: 10
-  },
-  unSelected: {
-    flex: 1,
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F1F1F1",
     borderRadius: 10
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15
   }
 });
 
-const Button = (params) => {
-  const btnStyle = {
-    backgroundColor: params.outline ? "#fff" : "#000",
-    borderColor: params.outline ? "#000" : "#fff",
-    borderWidth: 1
-  };
-  const btnText = {
-    color: params.outline ? "#000" : "#fff"
-  };
+const Input = (props) => {
   return (
-    <View style={buttonStyles.btnContainer}>
-      <Pressable style={[buttonStyles.btn, btnStyle]} onPress={params.onPress}>
-        <Text style={[buttonStyles.btnText, btnText]}>{params.buttonText}</Text>
-        <View style={styles.childrenContainer}>{params.children}</View>
-      </Pressable>
+    <View>
+      <TextInput
+        style={textStyles.input}
+        placeholder={props.placeholder}
+        value={props.value}
+        onChangeText={(num) => props.setValue(num)}
+        placeholderTextColor='#ddd'
+        editable={props.editable !== false}
+      />
+      {props.errorText ? <Text style={textStyles.error}>{props.errorText}</Text> : null}
     </View>
   );
 };
 
-const buttonStyles = StyleSheet.create({
-  btnContainer: {
-    paddingHorizontal: 5,
-    justifyContent: "center",
-    marginBottom: 20,
-    flex: 1
-  },
-  btn: {
-    backgroundColor: "black",
-    height: 50,
-    width: "100%",
-    padding: 10,
-    paddingHorizontal: 25,
+const textStyles = StyleSheet.create({
+  input: {
+    backgroundColor: "#fff",
+    height: 53,
+    borderColor: "#C4C4C4",
+    color: "#000",
     borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "rgba(0, 0, 0, 0.2)",
-    elevation: 10,
-    flexDirection: "row"
+    fontSize: 14,
+    borderWidth: 1,
+    paddingHorizontal: 10
   },
-  btnText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold"
-  },
-  childrenContainer: {
-    justifyContent: "center",
-    alignItems: "center"
+  error: {
+    fontSize: 13,
+    color: "#FA060D",
+    paddingTop: 8
   }
 });
