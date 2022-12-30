@@ -1,154 +1,155 @@
-import * as React from "react";
-import { Text, View, StyleSheet, TextInput, TouchableHighlight } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
 
-const pressed = () => {
-  console.log("pressed");
-};
-
-const ForgotPassword = () => {
+const NotificationsScreen = (params) => {
+  const [notifications, setNotifications] = useState([]);
+  useEffect(() => {
+    setNotifications([
+      {
+        id: 1,
+        type: "Booking Successful",
+        details: "You have booked Kreamy Corner",
+        time: "5 min ago",
+        read: false
+      },
+      {
+        id: 2,
+        type: "Booking Successful",
+        details: "You have booked Kreamy Corner",
+        time: "5 min ago",
+        read: false
+      },
+      {
+        id: 3,
+        type: "Event Reminder",
+        details: "Your next event will be held after 2 hours.",
+        time: "5 min ago",
+        read: true
+      },
+      {
+        id: 4,
+        type: "Event Reminder",
+        details: "Your next event will be held after 2 hours.",
+        time: "5 min ago",
+        read: true
+      },
+      {
+        id: 5,
+        type: "Event Reminder",
+        details: "Your next event will be held after 2 hours.",
+        time: "5 min ago",
+        read: true
+      },
+      {
+        id: 6,
+        type: "Event Reminder",
+        details: "Your next event will be held after 2 hours.",
+        time: "5 min ago",
+        read: true
+      },
+      {
+        id: 7,
+        type: "Event Reminder",
+        details: "Your next event will be held after 2 hours.",
+        time: "5 min ago",
+        read: true
+      }
+    ]);
+  }, []);
   return (
     <View style={styles.container}>
-      <View style={styles.topHead}>
-        <Text style={styles.mainHeading}>Forgot {"\n"} password</Text>
+      <View style={styles.header}>
+        <View style={styles.headerTextContainer}>
+          <Text style={styles.headerText}>Select all</Text>
+          <Text style={styles.headerText}>Mark all</Text>
+        </View>
       </View>
-
-      <View style={styles.inputSection}>
-      <View style={styles.newPassword}>
-        <Text style={styles.newpasswordText}>Set new password for your account.</Text>
-      </View>
-      <View style={styles.passwordInput}>
-        <Text style={styles.newpasswordLabel}>Password</Text>
-        <Input placeholder="Enter"></Input>
-      </View>
-      <View style={styles.confirmInput}>
-        <Text style={styles.newpasswordLabel}>Confirm Password</Text>
-        <Input placeholder="Enter"></Input>
-      </View>
-      </View>
-      <View style={styles.resetButton}>
-        <Button onPress={pressed} style={styles.resetBtn}>Reset password</Button>
-      </View>
-      <View style={styles.back}>
-        <Text style={styles.backText}>Back</Text>
+      <View style={styles.notificationsContainer}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {notifications.map((notification, index) => (
+            <NotificationTile notification={notification} key={index} />
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  topHead: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center"
-  },
-  mainHeading: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center"
-  },
+
+const NotificationTile = ({ notification }) => {
+  const textColor = {
+    color: notification.read ? "#8E8E8E" : "#000"
+  };
+  return (
+    <View style={notificationTileStyles.container}>
+      <View style={notificationTileStyles.notificationTextContainer}>
+        <Text style={[notificationTileStyles.mainText, textColor]}>
+          {notification.type}
+        </Text>
+        <Text style={textColor}>{notification.details}</Text>
+      </View>
+      <View style={notificationTileStyles.timeContainer}>
+        <Text style={textColor}>{notification.time}</Text>
+        <View>
+          {!notification.read
+            ? (
+            <Image source={require("./assets/readIcon.png")} />
+              )
+            : null}
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const notificationTileStyles = StyleSheet.create({
   container: {
-    padding: 20,
-    backgroundColor: "#FFF",
-    height: "100%"
-  },
-  inputSection: {
-    paddingTop: 40
-  },
-  newPassword: {
-    display: "flex",
+    borderBottomColor: "#ccc",
+    borderBottomWidth: 1,
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center"
-
+    justifyContent: "space-between",
+    height: 100,
+    alignItems: "center"
   },
-  passwordInput: {
-    marginTop: 50
+  notificationTextContainer: {
+    flexDirection: "column",
+    height: "80%",
+    justifyContent: "space-around" // alignItems: "center"
   },
-  newpasswordLabel: {
-    paddingLeft: 15,
-    paddingBottom: 7
+  mainText: {
+    fontSize: 18,
+    marginVertical: 10
   },
-  confirmInput: {
-    paddingTop: 10
-  },
-  resetButton: {
-    paddingTop: 20,
-    paddingLeft: 30,
-    paddingRight: 30
-  },
-  back: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 30
-  },
-  backText: {
-    fontWeight: "600",
-    fontSize: 20
+  timeContainer: {
+    height: "80%",
+    justifyContent: "space-around",
+    alignItems: "center"
   }
 });
-
-export default ForgotPassword;
-
-const Button = (props) => {
-  return (
-    <TouchableHighlight onPress={props.onPress} underlayColor='#DDDDDD'>
-      <View style={[btnStyles.button, {
-        backgroundColor: props.backgroundColor ? props.backgroundColor : "#000000",
-        height: props.height ? props.height : 49,
-        borderWidth: props.borderWidth ? props.borderWidth : 0,
-        borderColor: props.borderColor ? props.borderColor : "#000000"
-      }]}>
-        <Text style={[btnStyles.text, { color: props.color ? props.color : "#ffffff" }]}>{props.children}</Text>
-      </View>
-    </TouchableHighlight>
-  );
-};
-
-const btnStyles = StyleSheet.create({
-  button: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff"
   },
-  text: {
-    fontWeight: "bold",
-    fontSize: 15
-  }
-});
-
-const Input = (props) => {
-  return (
-    <View>
-      <TextInput
-        style={inputStyles.input}
-        placeholder={props.placeholder}
-        value={props.value}
-        onChangeText={(num) => props.setValue(num)}
-        placeholderTextColor='#ddd'
-        editable={props.editable !== false}
-      />
-      {props.errorText ? <Text style={inputStyles.error}>{props.errorText}</Text> : null}
-    </View>
-  );
-};
-
-const inputStyles = StyleSheet.create({
-  input: {
+  header: {
+    flex: 1,
+    paddingVertical: 10,
+    justifyContent: "space-around",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc"
+  },
+  headerTextContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 20
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: "bold"
+  },
+  notificationsContainer: {
+    flex: 12,
     backgroundColor: "#fff",
-    height: 53,
-    borderColor: "#C4C4C4",
-    color: "#000",
-    borderRadius: 10,
-    fontSize: 14,
-    borderWidth: 1,
-    paddingHorizontal: 15
-  },
-  error: {
-    fontSize: 13,
-    color: "#FA060D",
-    paddingTop: 8
+    paddingHorizontal: 20
   }
 });
+export default NotificationsScreen;
