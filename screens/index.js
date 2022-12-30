@@ -3,108 +3,168 @@ import {
   Text,
   StyleSheet,
   View,
+  ScrollView,
   SafeAreaView,
   TextInput,
-  Switch,
-  ScrollView
+  Pressable
 } from "react-native";
 
-const AccountSettingsScreen = (params) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [notifications, setNotifications] = useState(false);
-  const [emailNotifications, setEmailNotifications] = useState(false);
-  const [smsNotifications, setSmsNotifications] = useState(false);
-  const [deactivateAccount, setDeactivateAccount] = useState(false);
+const AddCardDetailsScreen = (params) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address1, setAddress1] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
+  const [country, setCountry] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cvv, setCvv] = useState("");
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <View style={styles.subContainer}>
-          <Text style={styles.subText}>Subscription</Text>
-          <View style={styles.subPallete}>
-            <View style={styles.planDes}>
-              <Text style={[styles.fnt25, styles.boldText]}>Plan</Text>
-              <Text style={styles.fnt16}>Description</Text>
+        <View style={styles.header}>
+          <View style={styles.paletteContainer}>
+            <View style={styles.unSelected}>
+              <Text>Linked Cards</Text>
             </View>
-            <View style={styles.subPricing}>
-              <Text style={[styles.fnt25, styles.boldText]}>$14.99 </Text>
-              <Text style={styles.fnt16}>per month</Text>
+            <View style={styles.selected}>
+              <Text>Add Card</Text>
             </View>
           </View>
         </View>
-        <View style={styles.billingContainer}>
-          <Text style={styles.billingText}>Billing informations</Text>
-          <View style={styles.nameInput}>
-            <Text style={styles.inputText}>Full Name</Text>
+        <View style={styles.fullInputs}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>First Name</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter your full name"
+              onChangeText={(text) => setFirstName(text)}
+              value={firstName}
+              placeholder="Enter your first name"
               placeholderTextColor="#9B9B9B"
               autoCapitalize="none"
               autoCorrect={false}
-              value={name}
-              onChangeText={(text) => setName(text)}
             />
           </View>
-          <View style={styles.nameInput}>
-            <Text style={styles.inputText}>Email Adress</Text>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>Last Name</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter your Email Adress"
+              onChangeText={(text) => setLastName(text)}
+              value={lastName}
+              placeholder="Enter your last name"
               placeholderTextColor="#9B9B9B"
               autoCapitalize="none"
               autoCorrect={false}
-              value={email}
-              onChangeText={(text) => setEmail(text)}
             />
           </View>
-          <View style={styles.nameInput}>
-            <Text style={styles.inputText}>Card number</Text>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>Address 1</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter your Card Number"
+              onChangeText={(text) => setAddress1(text)}
+              value={address1}
+              placeholder="Enter your Adress"
               placeholderTextColor="#9B9B9B"
               autoCapitalize="none"
               autoCorrect={false}
-              value={cardNumber}
-              onChangeText={(text) => setCardNumber(text)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>Address 2</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setAddress2(text)}
+              value={address2}
+              placeholder="Enter your Address"
+              placeholderTextColor="#9B9B9B"
+              autoCapitalize="none"
+              autoCorrect={false}
             />
           </View>
         </View>
-        <View style={styles.togglesContainer}>
-          <View style={styles.toggle}>
-            <Text style={styles.toggleText}>Notifications</Text>
-            <Switch
-              style={styles.toggleSwitch}
-              value={notifications}
-              onValueChange={(value) => setNotifications(value)}
+        <View style={styles.halfInputs}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>City</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setCity(text)}
+              value={city}
+              placeholder="Enter your City"
+              placeholderTextColor="#9B9B9B"
+              autoCapitalize="none"
+              autoCorrect={false}
             />
           </View>
-          <View style={styles.toggle}>
-            <Text style={styles.toggleText}>Email Notifications</Text>
-            <Switch
-              style={styles.toggleSwitch}
-              value={emailNotifications}
-              onValueChange={(value) => setEmailNotifications(value)}
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>State</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setState(text)}
+              value={state}
+              placeholder="Enter your State"
+              placeholderTextColor="#9B9B9B"
+              autoCapitalize="none"
+              autoCorrect={false}
             />
           </View>
-          <View style={styles.toggle}>
-            <Text style={styles.toggleText}>SMS Notifications</Text>
-            <Switch
-              style={styles.toggleSwitch}
-              value={smsNotifications}
-              onValueChange={(value) => setSmsNotifications(value)}
+        </View>
+        <View style={styles.halfInputs}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>Zip</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setZip(text)}
+              value={zip}
+              placeholder="Enter your Zip Code"
+              placeholderTextColor="#9B9B9B"
+              autoCapitalize="none"
+              autoCorrect={false}
             />
           </View>
-          <View style={styles.toggle}>
-            <Text style={styles.toggleText}>Deactivate Account</Text>
-            <Switch
-              style={styles.toggleSwitch}
-              value={deactivateAccount}
-              onValueChange={(value) => setDeactivateAccount(value)}
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>Country</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setCountry(text)}
+              value={country}
+              placeholder="Enter your Country"
+              placeholderTextColor="#9B9B9B"
+              autoCapitalize="none"
+              autoCorrect={false}
             />
           </View>
+        </View>
+        <View style={styles.halfInputs}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>Card Expiration</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setCardExpiry(text)}
+              value={cardExpiry}
+              placeholder="Enter Card Expiration"
+              placeholderTextColor="#9B9B9B"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>CVV</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setCvv(text)}
+              value={cvv}
+              placeholder="Enter your CVV"
+              placeholderTextColor="#9B9B9B"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
+        </View>
+        <View style={styles.btnContainer}>
+          <Pressable style={styles.btn}>
+            <Text style={styles.btnText}>Update</Text>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -116,65 +176,40 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff"
   },
-  subContainer: {
-    paddingHorizontal: 20,
-    flex: 0.2,
-    justifyContent: "center"
+  header: {
+    padding: 20
   },
-  subText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    padding: 2,
-    marginVertical: 12,
-    marginLeft: 20
+  paletteContainer: {
+    flexDirection: "row",
+    backgroundColor: "#F1F1F1",
+    height: 60,
+    width: 250,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "space-around",
+    paddingHorizontal: 15
   },
-  subPallete: {
+  selected: {
     backgroundColor: "#fff",
+    padding: 10,
+    paddingHorizontal: 25,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#e6e6e6",
-    padding: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    borderColor: "#e6e6e6"
   },
-  planDes: {
-    flex: 0.4,
+  unSelected: {
     padding: 10,
-    // borderWidth: 1,
-    // borderColor: '#979797',
-    justifyContent: "center",
-    alignItems: "flex-start"
+    paddingHorizontal: 25
   },
-  subPricing: {
-    flex: 0.6,
-    padding: 10,
-    // borderWidth: 1,
-    // borderColor: '#979797',
-    flexDirection: "row",
-    alignItems: "flex-end",
+  fullInputs: {
+    paddingHorizontal: 20,
     justifyContent: "center"
   },
-  boldText: {
-    fontWeight: "bold"
-  },
-  fnt25: {
-    fontSize: 25
-  },
-  fnt16: {
-    fontSize: 16
-  },
-  billingContainer: {
-    flex: 0.5,
-    paddingHorizontal: 20 // borderWidth: 1,
-    // borderColor: '#979797',
-  },
-  billingText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    padding: 2,
-    marginVertical: 12,
-    marginLeft: 20
+  inputContainer: {
+    flexDirection: "column",
+    flex: 1,
+    justifyContent: "center",
+    marginHorizontal: 5
   },
   inputText: {
     fontSize: 16,
@@ -189,21 +224,33 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: "100%"
   },
-  togglesContainer: {
-    flex: 0.3,
-    paddingHorizontal: 20
-  },
-  toggle: {
-    flexDirection: "row",
+  halfInputs: {
+    paddingHorizontal: 20,
     justifyContent: "space-between",
+    flexDirection: "row" // borderColor: '#9B9B9B',
+    // borderWidth: 1,
+  },
+  btnContainer: {
+    padding: 30,
+    paddingTop: 10,
+    paddingHorizontal: 40,
+    justifyContent: "center",
+    marginTop: 20
+  },
+  btn: {
+    backgroundColor: "black",
+    height: 50,
+    width: "100%",
+    padding: 10,
+    paddingHorizontal: 25,
+    borderRadius: 10,
+    justifyContent: "center",
     alignItems: "center"
   },
-  toggleText: {
+  btnText: {
+    color: "#fff",
     fontSize: 16,
-    fontWeight: "bold",
-    padding: 2,
-    marginVertical: 12,
-    marginLeft: 20
+    fontWeight: "bold"
   }
 });
-export default AccountSettingsScreen;
+export default AddCardDetailsScreen;
