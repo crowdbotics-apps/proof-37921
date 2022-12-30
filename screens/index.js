@@ -1,155 +1,343 @@
 import React, { useState, useEffect } from "react";
-import { Text, StyleSheet, View, Image, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  TextInput,
+  Image,
+  ScrollView
+} from "react-native";
 
-const NotificationsScreen = (params) => {
-  const [notifications, setNotifications] = useState([]);
+const Feedback = () => {
+  const [message, setMessage] = useState("");
+  const [reviews, setReviews] = useState([]);
+  const [expanded, setExpanded] = useState(null);
   useEffect(() => {
-    setNotifications([
+    setReviews([
       {
         id: 1,
-        type: "Booking Successful",
-        details: "You have booked Kreamy Corner",
-        time: "5 min ago",
-        read: false
+        username: "Username",
+        email: "username@email.com",
+        image: require("./assets/userImage.png"),
+        subject: "Molestie vestibulum nulla.",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pretium, commodo lacus, amet nulla faucibus vulputate erat vestibulum. Aliquet consequat nunc sit ullamcorper vel egestas nunc sagittis lectus. Sed ipsum vel in morbi non semper adipiscing nibh nam. Integer sem."
       },
       {
         id: 2,
-        type: "Booking Successful",
-        details: "You have booked Kreamy Corner",
-        time: "5 min ago",
-        read: false
+        username: "Username",
+        email: "username@email.com",
+        image: require("./assets/userImage.png"),
+        subject: "Molestie vestibulum nulla.",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pretium, commodo lacus, amet nulla faucibus vulputate erat vestibulum. Aliquet consequat nunc sit ullamcorper vel egestas nunc sagittis lectus. Sed ipsum vel in morbi non semper adipiscing nibh nam. Integer sem."
       },
       {
         id: 3,
-        type: "Event Reminder",
-        details: "Your next event will be held after 2 hours.",
-        time: "5 min ago",
-        read: true
+        username: "Username",
+        email: "username@email.com",
+        image: require("./assets/userImage.png"),
+        subject: "Molestie vestibulum nulla.",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pretium, commodo lacus, amet nulla faucibus vulputate erat vestibulum. Aliquet consequat nunc sit ullamcorper vel egestas nunc sagittis lectus. Sed ipsum vel in morbi non semper adipiscing nibh nam. Integer sem."
       },
       {
         id: 4,
-        type: "Event Reminder",
-        details: "Your next event will be held after 2 hours.",
-        time: "5 min ago",
-        read: true
-      },
-      {
-        id: 5,
-        type: "Event Reminder",
-        details: "Your next event will be held after 2 hours.",
-        time: "5 min ago",
-        read: true
-      },
-      {
-        id: 6,
-        type: "Event Reminder",
-        details: "Your next event will be held after 2 hours.",
-        time: "5 min ago",
-        read: true
-      },
-      {
-        id: 7,
-        type: "Event Reminder",
-        details: "Your next event will be held after 2 hours.",
-        time: "5 min ago",
-        read: true
+        username: "Username",
+        email: "username@email.com",
+        image: require("./assets/userImage.png"),
+        subject: "Molestie vestibulum nulla.",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pretium, commodo lacus, amet nulla faucibus vulputate erat vestibulum. Aliquet consequat nunc sit ullamcorper vel egestas nunc sagittis lectus. Sed ipsum vel in morbi non semper adipiscing nibh nam. Integer sem."
       }
     ]);
   }, []);
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Select all</Text>
-          <Text style={styles.headerText}>Mark all</Text>
-        </View>
-      </View>
-      <View style={styles.notificationsContainer}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {notifications.map((notification, index) => (
-            <NotificationTile notification={notification} key={index} />
-          ))}
-        </ScrollView>
-      </View>
-    </View>
-  );
-};
-
-const NotificationTile = ({ notification }) => {
-  const textColor = {
-    color: notification.read ? "#8E8E8E" : "#000"
+  useEffect(() => {
+    setExpanded(reviews[3]);
+  }, [reviews]);
+  const handleExpand = item => {
+    if (expanded === item) {
+      setExpanded(null);
+    } else {
+      setExpanded(item);
+    }
   };
   return (
-    <View style={notificationTileStyles.container}>
-      <View style={notificationTileStyles.notificationTextContainer}>
-        <Text style={[notificationTileStyles.mainText, textColor]}>
-          {notification.type}
-        </Text>
-        <Text style={textColor}>{notification.details}</Text>
-      </View>
-      <View style={notificationTileStyles.timeContainer}>
-        <Text style={textColor}>{notification.time}</Text>
-        <View>
-          {!notification.read
-            ? (
-            <Image source={require("./assets/readIcon.png")} />
-              )
-            : null}
+    <View style={styles.container}>
+      <ScrollView>
+        <TabView
+          tabTitles={["All Users"]}
+          selected={0}
+          style={styles.tabView}
+        />
+        <Text style={styles.title}>Feedback</Text>
+        <View style={styles.feedbackContainer}>
+          {reviews.map((review, index) => (
+            <Review
+              key={index}
+              item={review}
+              expanded={review === expanded}
+              onPress={x => {
+                handleExpand(x);
+              }}
+            />
+          ))}
+        </View>
+      </ScrollView>
+      <View style={styles.footer}>
+        <View style={styles.camera}>
+          <Image
+            source={require("./assets/cameraIcon.png")}
+            style={styles.cameraIcon}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Type a message"
+            onChangeText={text => setMessage(text)}
+            value={message}
+            autoCorrect={false}
+            autoCapitalize="none"
+            autoFocus={false}
+          />
+          <Image
+            source={require("./assets/emojiIcon.png")}
+            style={styles.smileyIcon}
+          />
+          <Image
+            source={require("./assets/voiceIcon.png")}
+            style={styles.voiceIcon}
+          />
+        </View>
+        <View style={styles.send}>
+          <Image
+            source={require("./assets/sendIcon.png")}
+            style={styles.sendIcon}
+          />
         </View>
       </View>
     </View>
   );
 };
 
-const notificationTileStyles = StyleSheet.create({
+const Review = ({ item, expanded, onPress }) => {
+  return (
+    <Pressable style={reviewStyles.container} onPress={() => onPress(item)}>
+      <View style={reviewStyles.header}>
+        <Image source={item.image} style={reviewStyles.image} />
+        <View style={reviewStyles.info}>
+          <Text style={reviewStyles.username}>{item.username}</Text>
+          <Text style={reviewStyles.email}>{item.email}</Text>
+        </View>
+        <Image
+          source={require("./assets/menuIcon.png")}
+          style={reviewStyles.menuIcon}
+        />
+      </View>
+      {expanded
+        ? (
+        <View style={reviewStyles.body}>
+          <Text style={reviewStyles.detailsText}>
+            <Text style={reviewStyles.green}>Email: {"\t"}</Text>
+            {"\t"}
+            {item.email}
+          </Text>
+          <Text style={reviewStyles.detailsText}>
+            <Text style={reviewStyles.green}>Subject: </Text>
+            {"\t"}
+            {item.subject}
+          </Text>
+          <Text style={reviewStyles.description}>{item.description}</Text>
+          <Pressable style={reviewStyles.btn}>
+            <Text style={reviewStyles.btnText}>Reply</Text>
+          </Pressable>
+        </View>
+          )
+        : null}
+    </Pressable>
+  );
+};
+
+const reviewStyles = StyleSheet.create({
   container: {
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: "#f1f1f1",
+    borderRadius: 10,
+    marginHorizontal: 20,
+    marginBottom: 10
+  },
+  header: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    height: 100,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "space-between"
   },
-  notificationTextContainer: {
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25
+  },
+  menuIcon: {
+    width: 20,
+    height: 20
+  },
+  username: {
+    fontSize: 14
+  },
+  email: {
+    fontSize: 12
+  },
+  info: {
     flexDirection: "column",
-    height: "80%",
-    justifyContent: "space-around" // alignItems: "center"
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginHorizontal: 10,
+    height: 40
   },
-  mainText: {
-    fontSize: 18,
-    marginVertical: 10
+  body: {
+    marginTop: 10,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#ccc"
   },
-  timeContainer: {
-    height: "80%",
-    justifyContent: "space-around",
-    alignItems: "center"
+  detailsText: {
+    marginBottom: 5
+  },
+  green: {
+    color: "#12D790"
+  },
+  description: {
+    fontSize: 12,
+    marginTop: 5,
+    textAlign: "justify"
+  },
+  btn: {
+    backgroundColor: "#000",
+    width: 60,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    marginVertical: 5,
+    alignSelf: "flex-end"
+  },
+  btnText: {
+    color: "#fff",
+    fontSize: 12
   }
 });
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff"
   },
-  header: {
-    flex: 1,
-    paddingVertical: 10,
-    justifyContent: "space-around",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc"
+  tabView: {
+    width: 150,
+    marginLeft: 20,
+    marginVertical: 10
   },
-  headerTextContainer: {
+  title: {
+    marginLeft: 20,
+    marginBottom: 10,
+    marginTop: 20
+  },
+  footer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 20
+    alignItems: "center",
+    padding: 10,
+    margin: 10
   },
-  headerText: {
-    fontSize: 18,
-    fontWeight: "bold"
+  inputContainer: {
+    width: "80%"
   },
-  notificationsContainer: {
-    flex: 12,
-    backgroundColor: "#fff",
-    paddingHorizontal: 20
+  input: {
+    paddingLeft: 15,
+    borderRadius: 10,
+    backgroundColor: "#F1F1F1",
+    height: 45
+  },
+  smileyIcon: {
+    position: "absolute",
+    right: 40,
+    top: 10,
+    opacity: 0.5
+  },
+  voiceIcon: {
+    top: 12,
+    right: 15,
+    position: "absolute",
+    opacity: 0.5
   }
 });
-export default NotificationsScreen;
+
+export default Feedback;
+
+const TabView = ({
+  tabTitles,
+  selected,
+  onPress,
+  tabColor,
+  backgroundColor,
+  style
+}) => {
+  const tabColorStyle = {
+    backgroundColor: tabColor || "#fff"
+  };
+  const backgroundColorStyle = {
+    backgroundColor: backgroundColor || "#F1F1F1"
+  };
+  const propStyle = style || {};
+  return (
+    <View
+      style={[tabViewStyles.paletteContainer, backgroundColorStyle, propStyle]}>
+      {tabTitles.map((title, index) => (
+        <Pressable
+          onPress={() => (onPress ? onPress(index) : null)}
+          style={
+            index === selected
+              ? [tabViewStyles.selected, tabColorStyle]
+              : [tabViewStyles.unSelected, backgroundColorStyle]
+          }
+          key={index}>
+          <Text>{title}</Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+};
+
+const tabViewStyles = StyleSheet.create({
+  paletteContainer: {
+    width: "80%",
+    height: 48,
+    backgroundColor: "#E4E4E4",
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
+    padding: 6,
+    marginVertical: 10
+  },
+  selected: {
+    borderRadius: 10,
+    flex: 1,
+    backgroundColor: "#fff",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "gray",
+    elevation: 10
+  },
+  unSelected: {
+    flex: 1,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#E4E4E4",
+    borderRadius: 10
+  }
+});
